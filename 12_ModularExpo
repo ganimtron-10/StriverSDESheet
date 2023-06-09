@@ -1,0 +1,16 @@
+#include <bits/stdc++.h>
+
+int modularExponentiation(int x, int n, int m) {
+	// Write your code here.
+	if(n == 0){
+		return 1;
+	}
+
+	long long ans = modularExponentiation(x,n/2,m);
+	long long dans = (ans * 1LL * ans)%m;
+	if(n&1){
+		return (x*dans)%m;
+	}else{
+		return (dans)%m;
+	}
+}
