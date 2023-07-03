@@ -1,0 +1,19 @@
+void cal(vector<int> &num, int i, int sum, vector<int> &v){
+	if(i == num.size()){
+		v.push_back(sum);
+		return;
+	}
+
+	cal(num,i+1,sum,v);
+
+	sum += num[i];
+	cal(num,i+1,sum,v);
+}
+
+vector<int> subsetSum(vector<int> &num){
+	// Write your code here.
+	vector<int> v;
+	cal(num, 0,0,v);
+	sort(v.begin(),v.end());
+	return v;
+}
