@@ -1,0 +1,23 @@
+int singleNonDuplicate(vector<int>& arr)
+{
+	// Write your code here
+	int low = 0, high = arr.size() - 1;
+	int mid;
+
+
+	if(arr[0] != arr[1]) return arr[0];
+	else if(arr[high] != arr[high-1]) return arr[high];
+	
+	while(low <= high){
+		mid = low + (high - low)/2;
+		if(arr[mid-1] != arr[mid] and arr[mid] != arr[mid+1]){
+			return arr[mid];
+		}else if((mid%2 == 0 and arr[mid+1] == arr[mid]) or (mid%2 != 0 and arr[mid - 1] == arr[mid])){
+			low = mid + 1;
+		}else{
+			high = mid - 1;
+		}
+	}
+
+	return -1;
+}

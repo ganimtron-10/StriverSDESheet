@@ -1,0 +1,57 @@
+#include <bits/stdc++.h> 
+class Queue {
+public:
+    int start;
+    int end;
+    static const int N = 100000;
+    int arr[N];
+
+    Queue() {
+        // Implement the Constructor
+        start = -1;
+        end = -1;
+    }
+
+    /*----------------- Public Functions of Queue -----------------*/
+
+    bool isEmpty() {
+        // Implement the isEmpty() function
+        if(start == -1 && end == -1){
+            return true;
+        }
+        return false;
+    }
+
+    void enqueue(int data) {
+        // Implement the enqueue() function
+        if(start == -1){
+            start = 0;
+        }
+        arr[++end] = data;
+     }
+
+    int dequeue() {
+        // Implement the dequeue() function
+        if(isEmpty()){
+            return -1;
+        }
+        else{ 
+            if(start == end){
+                int temp = arr[start];
+                start = -1;
+                end = -1;
+                return temp;
+            }
+           
+            return  arr[start++];
+        }
+    }
+
+    int front() {
+        // Implement the front() function
+        if(isEmpty()){
+            return -1;
+        }
+        return arr[start];
+    }
+};
