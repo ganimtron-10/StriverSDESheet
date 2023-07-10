@@ -1,0 +1,53 @@
+#include <bits/stdc++.h> 
+
+void addElement(int ele, vector<int> &minH){
+    int i = minH.size();
+    minH.push_back(ele);
+    int parent = (i-1)/2;
+    while(parent >= 0 and minH[parent] > minH[i]){
+        swap(minH[parent],minH[i]);
+        i = parent;
+        parent = (i-1)/2;
+    }
+
+}
+
+int removeElement(vector<int> &minH){
+    
+    // for(auto i: minH){
+    //     cout << i << " ";
+    // }
+
+    int ele = minH[0];
+    minH[0] = minH[minH.size() - 1];
+    minH.pop_back();
+    int i = 0;
+    int left = i*2+1, right = i*2+2;
+    while(i < minH.size() and (minH[i] > minH[left] or minH[i] > minH[right])){
+        if(minH[left] < minH[right]){
+            swap(minH[left], minH[i]);
+            i = left;
+        }else{
+            swap(minH[right], minH[i]);
+            i = right;
+        }
+        left = i*2+1;
+        right = i*2+2;
+    }
+    return ele;
+}
+
+vector<int> minHeap(int n, vector<vector<int>>& q) {
+    // Write your code here.
+    vector<int> v, minH;
+
+    for(int i = 0; i < n; i++){
+        if(q[i][0] == 0){
+            addElement(q[i][1], minH);
+        }else{
+            v.push_back(removeElement(minH));
+        }
+    }
+
+    return v;
+}
