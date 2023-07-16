@@ -1,0 +1,35 @@
+void color(vector<vector<int>>& image, int i, int j, int newColor, int curColor, vector<vector<bool>>& visited) {
+    if (i < 0 || j < 0 || i >= image.size() || j >= image[0].size() || visited[i][j]) {
+        return;
+    }
+
+    visited[i][j] = true;
+
+    if (image[i][j] == curColor) {
+        image[i][j] = newColor;
+
+        color(image, i + 1, j, newColor, curColor, visited);
+        color(image, i - 1, j, newColor, curColor, visited);
+        color(image, i, j + 1, newColor, curColor, visited);
+        color(image, i, j - 1, newColor, curColor, visited);
+    }
+}
+
+vector<vector<int>> floodFill(vector<vector<int>>& image, int x, int y, int newColor) {
+    if (image.empty() || image[0].empty()) {
+        return image;
+    }
+
+    int rows = image.size();
+    int cols = image[0].size();
+
+    // Create a 2D vector to keep track of visited pixels
+    vector<vector<bool>> visited(rows, vector<bool>(cols, false));
+
+    int curColor = image[x][y];
+
+    // Call the color function with the visited vector
+    color(image, x, y, newColor, curColor, visited);
+
+    return image;
+}
