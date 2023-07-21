@@ -1,0 +1,21 @@
+long long exp(int a, int b, int val){
+  long long ans = 1;
+  for(int i = 0; i < b; i++){
+    ans *= a;
+    if(ans > val) return -1;
+  }
+  return ans;
+} 
+
+int NthRoot(int n, int m) {
+  // Write your code here.
+  int l = 1, h = m;
+  while(l <= h){
+    int mid = l + (h-l)/2;
+    int ans = exp(mid,n,m);
+    if(ans == m) return mid;
+    else if(ans != -1 and ans < m) l = mid+1;
+    else h = mid - 1;
+  }
+  return -1;
+}
