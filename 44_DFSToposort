@@ -1,0 +1,39 @@
+#include <bits/stdc++.h> 
+
+
+
+void dfs(vector<vector<int>>& adj, int node, vector<int>& vis, stack<int>& s) {
+    vis[node] = 1;
+    for (auto child : adj[node]) {
+        if (!vis[child]) {
+            dfs(adj, child, vis, s);
+        }
+    }
+    s.push(node);
+}
+
+
+vector<int> topologicalSort(vector<vector<int>> &edges, int v, int e)  {
+    // Write your code here
+    vector<vector<int>> adj(v, vector<int>());
+
+    for (auto edge : edges) {
+        adj[edge[0]].push_back(edge[1]);
+    }
+
+    vector<int> vis(v + 1, 0);
+    stack<int> s;
+
+    for (int i = 0; i < v; i++) {
+        if (!vis[i]) {
+            dfs(adj,i,vis,s);
+        }
+    }
+
+    vector<int> ans;
+    while(!s.empty()){
+        ans.push_back(s.top());
+        s.pop();
+    }
+    return ans;
+}
