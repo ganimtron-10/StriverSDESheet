@@ -1,0 +1,33 @@
+void markLand(int **arr, int i, int j,int n,int m){
+   if(i<0 or i>=n or j<0 or j>=m){
+      return;
+   }
+   if(arr[i][j] == 1){
+      arr[i][j] = 2;
+
+      markLand(arr,i+1,j,n,m);
+      markLand(arr,i,j+1,n,m);
+      markLand(arr,i+1,j+1,n,m);
+      markLand(arr,i-1,j,n,m);
+      markLand(arr,i-1,j+1,n,m);
+      markLand(arr,i-1,j-1,n,m);
+      markLand(arr,i,j-1,n,m);
+      markLand(arr,i+1,j-1,n,m);
+   }
+
+}
+
+int getTotalIslands(int** arr, int n, int m)
+{
+   // Write your code here.
+   int cnt = 0;
+   for(int i = 0; i < n; i++){
+      for(int j = 0; j < m; j++){
+         if(arr[i][j] == 1){
+            markLand(arr,i,j,n,m);
+            cnt++;
+         }
+      }
+   }
+   return cnt;
+}
