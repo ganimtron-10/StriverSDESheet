@@ -1,0 +1,40 @@
+#include <bits/stdc++.h> 
+
+// bool comp(pair<int,int> i1,pair<int,int> i2){
+//     if(i1.second == i2.second){
+//         return i1.first > i2.first;
+//     }else{
+//         return i1.second > i2.second;
+//     }
+// }
+bool comp(pair<int, int> i1, pair<int, int> i2) {
+    double ratio1 = static_cast<double>(i1.second) / i1.first;
+    double ratio2 = static_cast<double>(i2.second) / i2.first;
+    return ratio1 > ratio2;
+}
+
+// 100 + 50 + 40
+// 120 + 40 + 
+
+double maximumValue (vector<pair<int, int>>& items, int n, int w)
+{
+    // Write your code here.
+    // ITEMS contains {weight, value} pairs.
+    sort(items.begin(),items.end(),comp);
+    int i = 0;
+    double val = 0;
+    while(i<n & w>0){
+        pair<int,int> cur = items[i];
+        if(cur.first >= w){
+            val += w * ((cur.second*1.0)/cur.first);
+            break;
+        }else{
+            val += cur.second;
+            w -= cur.first;
+        }
+
+        i++;
+    }
+    return val;
+}
+52
