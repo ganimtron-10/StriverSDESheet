@@ -1,0 +1,40 @@
+Node *addTwoNumbers(Node *num1, Node *num2)
+{
+    // Write your code here.
+    Node *c1 = num1, *c2 = num2;
+    int carry = 0;
+    Node *res = new Node();
+    Node *cur = res;
+    while (c1 != NULL or c2 != NULL)
+    {
+        int val = carry;
+        if (c1 != NULL)
+        {
+            val += c1->data;
+            c1 = c1->next;
+        }
+        if (c2 != NULL)
+        {
+            val += c2->data;
+            c2 = c2->next;
+        }
+
+        if (val > 9)
+        {
+            carry = 1;
+            val = val % 10;
+        }
+        else
+        {
+            carry = 0;
+        }
+        cur->data = val;
+
+        if (c1 != NULL or c2 != NULL or carry == 1)
+        {
+            cur->next = new Node(1);
+            cur = cur->next;
+        }
+    }
+    return res;
+}
