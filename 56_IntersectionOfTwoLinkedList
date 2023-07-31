@@ -1,0 +1,29 @@
+Node* findIntersection(Node *firstHead, Node *secondHead)
+{
+    //Write your code here
+    Node *l1=firstHead, *l2=secondHead;
+    Node *ans = NULL;
+
+    while(l1 != NULL or l2 != NULL){
+        if(l1 == l2){
+            ans = l1;
+            break;
+        }
+        if(l1->next == NULL){
+            l1 = secondHead;
+        }else{
+            l1 = l1->next;
+        }
+        
+
+        if(l2->next == NULL){
+            l2 = firstHead;
+        }else{
+            l2 = l2->next;
+        }
+        
+    }
+
+    return ans;
+
+}
