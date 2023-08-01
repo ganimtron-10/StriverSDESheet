@@ -1,0 +1,25 @@
+Node *firstNode(Node *head)
+{
+    //    Write your code here.
+    Node *f = head, *s = head;
+    bool cycleFound = false;
+    while(f != NULL and f->next != NULL){
+        s = s->next;
+        f = f->next->next;
+
+        if(s == f){
+            cycleFound = true;
+            break;
+        }
+    }
+
+    if(cycleFound){
+        s = head;
+        while(s != f){
+            s = s->next;
+            f = f->next;
+        }
+        return s;
+    }
+    return NULL;
+}
