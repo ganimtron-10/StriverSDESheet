@@ -1,0 +1,19 @@
+#include<bits/stdc++.h>
+int maximumActivities(vector<int> &start, vector<int> &end) {
+    // Write your code here.
+    set<pair<int, pair<int,int>>> s;
+    for(int i = 0; i < start.size(); i++){
+        s.insert({end[i],{i,start[i]}});
+    }
+
+    int lastTime = 0,cnt = 0;
+    for(auto sv: s){
+        // cout << sv.first << " " << sv.second.first << " " << sv.second.second 
+        // << endl;
+        if(lastTime <= sv.second.second){
+            cnt++;
+            lastTime = sv.first;
+        }
+    }
+    return cnt;
+}
