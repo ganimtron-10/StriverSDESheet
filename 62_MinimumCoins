@@ -1,0 +1,25 @@
+vector<int> MinimumCoins(int n)
+{
+    // Write your code here
+    vector<int> v = {1000,500,100,50,20,10,5,2,1}, res;
+
+    int val = 0, i = 0;
+    while(val != n){
+        if(v[i] <= n-val){
+            // cout << v[i] << endl;
+            int coinnum = (n-val)/v[i];
+            val += v[i]*coinnum;
+            for(int j=0; j < coinnum;j++){
+                res.push_back(v[i]);
+            }
+        }
+        i++;
+    }
+
+    // for(auto val: res){
+    //     cout << val << " ";
+    // }
+    // cout << endl;
+
+    return res;
+}
