@@ -1,0 +1,29 @@
+#include <bits/stdc++.h> 
+
+void gen(vector<int> &v, vector<int> &temp ,set<vector<int>> &s, int i){
+    if(i == v.size()){
+        sort(temp.begin(),temp.end());
+        s.insert(temp);
+        return;
+    }
+
+    temp.push_back(v[i]);
+    gen(v,temp,s,i+1);
+    temp.pop_back();
+
+    gen(v,temp,s,i+1);
+
+}
+
+vector<vector<int>> pwset(vector<int>v)
+{
+    //Write your code here
+    set<vector<int>> ans;
+    vector<int> temp;
+    gen(v,temp,ans,0);
+    vector<vector<int>> res;
+    for(auto a: ans){
+        res.push_back(a);
+    }
+    return res;
+}
