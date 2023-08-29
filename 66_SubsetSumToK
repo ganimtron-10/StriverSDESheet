@@ -1,0 +1,29 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+
+void gen(vector<int> &arr, int n, int k, int i, int sum, vector<vector<int>> &res, vector<int> &temp)
+{
+    if (sum == k and i == n)
+    {
+        // cout << "PF" << " " << n << " " << k << " " << i << " " << sum << endl;
+        res.push_back(temp);
+    }
+    if (i == n)
+    {
+        return;
+    }
+    gen(arr, n, k, i + 1, sum, res, temp);
+    temp.push_back(arr[i]);
+    gen(arr, n, k, i + 1, sum + arr[i], res, temp);
+    temp.pop_back();
+}
+
+vector<vector<int>> findSubsetsThatSumToK(vector<int> arr, int n, int k)
+{
+    // Write your code here.
+    vector<vector<int>> res;
+    vector<int> temp;
+    gen(arr, n, k, 0, 0, res, temp);
+    return res;
+}
