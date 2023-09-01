@@ -1,0 +1,50 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+bool isSafe(vector<int> &row, int i, int j)
+{
+    for (int k = 0; k < j; k++)
+    {
+        if (row[k] == i or k + row[k] == j + i or k - row[k] == j - i)
+            return false;
+    }
+    return true;
+}
+void gen(int n, int c, vector<vector<int>> &res, vector<int> &row)
+{
+    if (c == n)
+    {
+        vector<int> temp;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                if (row[j] == i)
+                {
+                    temp.push_back(1);
+                }
+                else
+                {
+                    temp.push_back(0);
+                }
+            }
+        }
+        res.push_back(temp);
+    }
+    for (int i = 0; i < n; i++)
+    {
+        if (isSafe(row, i, c))
+        {
+            row[c] = i;
+            gen(n, c + 1, res, row);
+            row[c] = -1;
+        }
+    }
+}
+vector<vector<int>> solveNQueens(int n)
+{ // Write your code here.
+    vector<vector<int>> res;
+    vector<int> row(n, -1);
+    gen(n, 0, res, row);
+    return res;
+}
