@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void genPath(vector<vector<int>> &mat, vector<string> &res, int i, int j, string path)
+{
+    if (i < 0 or j < 0 or i >= mat.size() or j >= mat[0].size() or mat[i][j] != 1)
+    {
+        return;
+    }
+
+    if (i == mat.size() - 1 and j == mat[0].size() - 1)
+    {
+        res.push_back(path);
+        return;
+    }
+
+    mat[i][j] = -99;
+
+    path.push_back('U');
+    genPath(mat, res, i - 1, j, path);
+    path.pop_back();
+
+    path.push_back('D');
+    genPath(mat, res, i + 1, j, path);
+    path.pop_back();
+
+    path.push_back('L');
+    genPath(mat, res, i, j - 1, path);
+    path.pop_back();
+
+    path.push_back('R');
+    genPath(mat, res, i, j + 1, path);
+    path.pop_back();
+
+    mat[i][j] = 1;
+}
+
+vector<string> ratMaze(vector<vector<int>> &mat)
+{
+    // Write your code here.
+    vector<string> res;
+    genPath(mat, res, 0, 0, "");
+    return res;
+}
