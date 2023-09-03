@@ -1,0 +1,46 @@
+Node *cloneLL(Node *head)
+{
+    if (head == nullptr)
+    {
+        return nullptr;
+    }
+
+    Node *cur = head;
+    Node *temp = nullptr;
+
+    // Create a copy of the original linked list.
+    while (cur != nullptr)
+    {
+        temp = new Node(cur->data);
+        temp->next = cur->next;
+        cur->next = temp;
+        cur = temp->next;
+    }
+
+    // Set the random pointers of the cloned linked list.
+    cur = head;
+    while (cur != nullptr)
+    {
+        if (cur->random != nullptr)
+        {
+            cur->next->random = cur->random->next;
+        }
+        cur = cur->next->next;
+    }
+
+    // Separate the cloned linked list from the original linked list.
+    cur = head;
+    Node *clonedHead = head->next;
+    while (cur != nullptr)
+    {
+        temp = cur->next;
+        cur->next = temp->next;
+        if (temp->next != nullptr)
+        {
+            temp->next = temp->next->next;
+        }
+        cur = cur->next;
+    }
+
+    return clonedHead;
+}
