@@ -1,0 +1,38 @@
+#include <bits/stdc++.h> 
+
+bool genPath(vector<vector<int>> &maze, int i, int j, vector<vector<int> > &ans,vector<vector<int> > & res){
+    if(i < 0 or i>= maze.size() or j < 0 or j >= maze.size() or maze[i][j] == 0 or ans[i][j] == 2){
+      return false;
+    }
+
+    ans[i][j] = 2;
+    if(i == maze.size()-1 and j == maze.size()-1){
+      vector<int> temp;
+      for(int a = 0; a < maze.size(); a++){
+        for(int b = 0; b < maze[0].size(); b++){
+          if(ans[a][b] == 2){
+            temp.push_back(1);
+          }
+          else{
+            temp.push_back(0);
+          }
+        }
+      }
+      res.push_back(temp);
+    }
+
+ 
+    genPath(maze,i+1,j,ans,res);
+    genPath(maze,i-1,j,ans,res);
+    genPath(maze,i,j-1,ans,res);
+    genPath(maze,i,j+1,ans,res);
+    ans[i][j] = 0;
+}
+
+vector<vector<int> > ratInAMaze(vector<vector<int> > &maze, int n){
+  // Write your code here.
+  vector<vector<int>> res(n, vector<int>(n,0)), ans;
+  genPath(maze,0,0,res,ans);
+  //reverse(ans.begin(),ans.end());
+  return ans;
+}
