@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+
+bool safe(map<int, int> colourMap, int node, vector<vector<int>> &mat, int col) {
+    for (int i = 0; i < mat.size(); i++) {
+        if (mat[node][i] && colourMap[i] == col) {
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
+bool gen(vector<vector<int>> &mat, int node, int m, map<int, int> &colourMap) {
+    if (node == mat.size()) {
+        return true;
+    }
+
+    for (int col = 0; col < m; col++) {
+        if (safe(colourMap, node, mat, col)) {
+            colourMap[node] = col;
+            if (gen(mat, node + 1, m, colourMap)) {
+                return true;
+            }
+            colourMap[node] = -1;
+        }
+    }
+
+    return false;
+}
+
+string graphColoring(vector<vector<int>> &mat, int m) {
+    map<int, int> colourMap;
+    for (int i = 0; i < mat.size(); i++) {
+        colourMap[i] = -1;
+    }
+    if (gen(mat, 0, m, colourMap)) {
+        return "YES";
+    }
+    return "NO";
+}
+
