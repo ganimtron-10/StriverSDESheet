@@ -1,0 +1,39 @@
+
+#include <bits/stdc++.h>
+
+int ninjaAndLadoos(vector<int> &row1, vector<int> &row2, int m, int n, int k)
+{
+    if (m > n)
+    {
+        return ninjaAndLadoos(row2, row1, n, m, k);
+    }
+
+    int left = max(0, k - n);
+    int right = min(k, m);
+
+    while (left <= right)
+    {
+        int mid1 = left + (right - left) / 2;
+        int mid2 = k - mid1;
+
+        int maxLeft1 = (mid1 > 0) ? row1[mid1 - 1] : INT_MIN;
+        int maxLeft2 = (mid2 > 0) ? row2[mid2 - 1] : INT_MIN;
+        int minRight1 = (mid1 < m) ? row1[mid1] : INT_MAX;
+        int minRight2 = (mid2 < n) ? row2[mid2] : INT_MAX;
+
+        if (maxLeft1 <= minRight2 && maxLeft2 <= minRight1)
+        {
+            return max(maxLeft1, maxLeft2);
+        }
+        else if (maxLeft1 > minRight2)
+        {
+            right = mid1 - 1;
+        }
+        else
+        {
+            left = mid1 + 1;
+        }
+    }
+
+    return -1;
+}
