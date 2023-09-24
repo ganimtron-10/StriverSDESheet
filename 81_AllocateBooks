@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+
+bool isPossible(vector<int> &time, int n, int mid)
+{
+    int sum = 0, k = 1;
+    for (int i = 0; i < time.size(); i++)
+    {
+
+        if (sum + time[i] > mid)
+        {
+            k++;
+            sum = time[i];
+        }
+        else
+        {
+            sum += time[i];
+        }
+
+        if (k > n)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+long long ayushGivesNinjatest(int n, int m, vector<int> time)
+{
+    // Write your code here.
+    int l = *(max_element(time.begin(), time.end()));
+    int h = accumulate(time.begin(), time.end(), 0);
+
+    while (l <= h)
+    {
+        int mid = (l + h) / 2;
+        if (isPossible(time, n, mid))
+        {
+            h = mid - 1;
+        }
+        else
+        {
+            l = mid + 1;
+        }
+    }
+
+    return l;
+}
