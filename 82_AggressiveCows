@@ -1,0 +1,33 @@
+bool isPossible(vector<int> &stalls, int k, int mid) {
+    int curCow = stalls[0];
+    int cnt = 1;
+    for (int i = 1; i < stalls.size(); i++) {
+        if (stalls[i] - curCow >= mid) {
+            cnt++;
+            curCow = stalls[i];
+            if (cnt >= k) return true; 
+        }
+    }
+    return false;
+}
+
+
+
+int aggressiveCows(vector<int> &stalls, int k)
+{
+    //    Write your code here.
+    sort(stalls.begin(),stalls.end());
+    int l = 1;
+    int h = stalls[stalls.size()-1] - stalls[0];
+    int ans = -1;
+    while(l <= h){
+        int mid = l + (h-l)/2;
+        if(isPossible(stalls,k,mid)){
+            ans = mid;
+            l = mid+1;
+        }else{
+            h = mid-1;
+        }
+    }
+    return ans;
+}
