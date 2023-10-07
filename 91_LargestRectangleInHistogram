@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> computeP(vector<int> &heights)
+{
+    stack<int> s;
+    vector<int> p;
+    for (int i = 0; i < heights.size(); i++)
+    {
+        while (!s.empty() and heights[s.top()] >= heights[i])
+        {
+            s.pop();
+        }
+        if (s.empty())
+        {
+            p.push_back(-1);
+            s.push(i);
+            continue;
+        }
+
+        p.push_back(s.top());
+        s.push(i);
+    }
+    return p;
+}
+
+vector<int> computeN(vector<int> &heights)
+{
+    stack<int> s;
+    vector<int> n;
+    for (int i = heights.size() - 1; i >= 0; i--)
+    {
+        while (!s.empty() and heights[s.top()] >= heights[i])
+        {
+            s.pop();
+        }
+        if (s.empty())
+        {
+            n.push_back(-1);
+            s.push(i);
+            continue;
+        }
+        n.push_back(s.top());
+        s.push(i);
+    }
+    reverse(n.begin(), n.end());
+    return n;
+}
+
+int largestRectangle(vector<int> &heights)
+{
+    // Write your code here.
+    vector<int> prev = computeP(heights);
+    vector<int> next = computeN(heights);
+
+    // for (int i = 0; i < prev.size(); i++)
+    // {
+    //     cout << "p =" << prev[i] << "; n = " << next[i] << endl;
+    // }
+
+    int maxa = 0, l = 0, h = 0;
+    for (int i = 0; i < heights.size(); i++)
+    {
+        h = heights[i];
+
+        if (next[i] == -1)
+            next[i] = heights.size();
+
+        l = next[i] - prev[i] - 1;
+
+        maxa = max(maxa, l * h);
+    }
+    return maxa;
+}
