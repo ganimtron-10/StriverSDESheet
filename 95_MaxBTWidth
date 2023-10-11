@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+
+int getMaxWidth(TreeNode<int> *root)
+{
+    // Write your code here.
+    if (root == NULL)
+        return 0;
+    queue<pair<TreeNode<int> *, int>> q;
+    q.push({root, 1});
+    int cl = 1, cnt = 0, ans = 0;
+    while (!q.empty())
+    {
+        pair<TreeNode<int> *, int> cur = q.front();
+        q.pop();
+        if (cur.first->left != NULL)
+        {
+            q.push({cur.first->left, cur.second + 1});
+        }
+        if (cur.first->right != NULL)
+        {
+            q.push({cur.first->right, cur.second + 1});
+        }
+
+        if (cl == cur.second)
+        {
+            cnt++;
+        }
+        else
+        {
+            ans = max(ans, cnt);
+            cl = cur.second;
+            cnt = 1;
+        }
+    }
+    ans = max(ans, cnt);
+    return ans;
+}
