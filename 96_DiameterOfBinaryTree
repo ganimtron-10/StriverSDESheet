@@ -1,0 +1,18 @@
+int findDiameter(TreeNode<int> *root, int& maxv){
+    if(root == NULL){
+        return 0;
+    }
+
+    int lefth = findDiameter(root->left,maxv);
+    int righth = findDiameter(root->right,maxv);
+    maxv = max(maxv,lefth+righth);
+    return max(lefth,righth)+1;
+
+}
+
+int diameterOfBinaryTree(TreeNode<int> *root){
+	// Write Your Code Here.
+    int maxv = 0;
+    findDiameter(root,maxv);
+    return maxv;
+}
