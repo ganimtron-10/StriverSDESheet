@@ -1,0 +1,20 @@
+void preorder(TreeNode<int>* root, int level, set<int> &levelAlreadyVisited, vector<int> & leftView){
+    if(root == NULL) return;
+
+    if(levelAlreadyVisited.find(level) == levelAlreadyVisited.end()){
+        leftView.push_back(root->data);
+        levelAlreadyVisited.insert(level);
+    }
+
+    preorder(root->left,level+1,levelAlreadyVisited,leftView);
+    preorder(root->right,level+1,levelAlreadyVisited,leftView);
+}
+
+vector<int> getLeftView(TreeNode<int> *root)
+{
+    //    Write your code here
+    set<int> levelAlreadyVisited;
+    vector<int> leftView;
+    preorder(root, 0, levelAlreadyVisited, leftView);
+    return leftView;
+}
