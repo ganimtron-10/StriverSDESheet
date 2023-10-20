@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+vector<int> bottomView(TreeNode<int> * root){
+    // Write your code here.
+    queue<pair<TreeNode<int>*,int>> q;
+    map<int,int> ans;
+    q.push({root,0});
+    while(!q.empty()){
+        auto p = q.front();
+        q.pop();
+        ans[p.second] = p.first->data;
+        if(p.first->left != NULL){
+            q.push({p.first->left,p.second-1});
+        }
+        if(p.first->right != NULL){
+            q.push({p.first->right,p.second+1});
+        }
+    }
+    vector<int> res;
+    for(auto p: ans){
+        res.push_back(p.second);
+    }
+    return res;
+}
