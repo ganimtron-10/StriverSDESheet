@@ -1,0 +1,26 @@
+bool findPath(TreeNode<int>* root, int x, vector<int>&v){
+    if(root == NULL) return false;
+
+    v.push_back(root->data);
+    if(root->data == x) return true;
+    if(findPath(root->left,x,v)) return true;
+    if(findPath(root->right,x,v)) return true;
+    v.pop_back();
+    return false;
+}
+
+int lowestCommonAncestor(TreeNode<int> *root, int x, int y)
+{
+	//    Write your code here
+    vector<int> l1,l2;
+    findPath(root, x, l1);
+    findPath(root, y, l2);
+    
+    int ans = root->data;
+    for(int i = 1; i < min(l1.size(),l2.size()); i++){
+        if(l1[i]!=l2[i]) break;
+        else ans = l1[i];
+    }
+    return ans;
+    
+}
