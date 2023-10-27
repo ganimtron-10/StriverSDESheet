@@ -1,0 +1,71 @@
+bool isLeaf(TreeNode<int> *node)
+{
+    if (node->left == NULL and node->right == NULL)
+        return true;
+    return false;
+}
+
+void addLeftB(TreeNode<int> *root, vector<int> &res)
+{
+    if (root->left == NULL)
+        return;
+    TreeNode<int> *cur = root->left;
+    while (!isLeaf(cur))
+    {
+        res.push_back(cur->data);
+        if (cur->left == NULL)
+            cur = cur->right;
+        else
+            cur = cur->left;
+    }
+}
+
+void addLeaves(TreeNode<int> *root, vector<int> &res)
+{
+    if (root == NULL)
+        return;
+
+    if (isLeaf(root))
+    {
+        res.push_back(root->data);
+        return;
+    }
+
+    addLeaves(root->left, res);
+    addLeaves(root->right, res);
+}
+
+void addRightB(TreeNode<int> *root, vector<int> &res)
+{
+    if (root->right == NULL)
+        return;
+    TreeNode<int> *cur = root->right;
+    vector<int> temp;
+    while (!isLeaf(cur))
+    {
+        temp.push_back(cur->data);
+        if (cur->right == NULL)
+            cur = cur->left;
+        else
+            cur = cur->right;
+    }
+
+    res.insert(res.end(), temp.rbegin(), temp.rend());
+}
+
+vector<int> traverseBoundary(TreeNode<int> *root)
+{
+    // Write your code here.
+    vector<int> res;
+    if (root == NULL)
+        return res;
+    res.push_back(root->data);
+    if (isLeaf(root))
+        return res;
+
+    addLeftB(root, res);
+    addLeaves(root, res);
+    addRightB(root, res);
+
+    return res;
+}
