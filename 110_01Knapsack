@@ -1,0 +1,19 @@
+int calProfit(vector<vector<int>> &dp, vector<int> &values, vector<int> &weights, int n, int w, int i) {
+    if (i == n || w == 0) return 0;
+
+    if (dp[i][w] != -1) return dp[i][w];
+
+    int woele = calProfit(dp, values, weights, n, w, i + 1);
+    if (weights[i] <= w) {
+        dp[i][w] = max(woele, values[i] + calProfit(dp, values, weights, n, w - weights[i], i + 1));
+    } else {
+        dp[i][w] = woele;
+    }
+
+    return dp[i][w];
+}
+
+int maxProfit(vector<int> &values, vector<int> &weights, int n, int w) {
+    vector<vector<int>> dp(n + 1, vector<int>(w + 1, -1));
+    return calProfit(dp, values, weights, n, w, 0);
+}
