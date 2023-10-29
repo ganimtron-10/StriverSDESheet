@@ -1,0 +1,27 @@
+
+TreeNode<int>* BT(vector<int>& inorder, vector<int>& preorder, int is, int ie, int ps, int pe, map<int, int>& hsh) {
+    if (is > ie || ps > pe) return NULL;
+
+    int curRootInd = hsh[preorder[ps]];
+
+    TreeNode<int>* root = new TreeNode<int>(preorder[ps]);
+    root->left = BT(inorder, preorder, 
+                    is, curRootInd - 1, 
+                    ps + 1, ps + curRootInd - is, hsh);
+    root->right = BT(inorder, preorder,
+                    curRootInd + 1, ie,
+                    ps + curRootInd - is + 1, pe, hsh);
+
+    return root;
+}
+
+TreeNode<int>* buildBinaryTree(vector<int>& inorder, vector<int>& preorder) {
+    if (inorder.size() != preorder.size()) return NULL;
+
+    map<int, int> hsh;
+    for (int i = 0; i < inorder.size(); i++) {
+        hsh[inorder[i]] = i;
+    }
+
+    return BT(inorder, preorder, 0, inorder.size() - 1, 0, preorder.size() - 1, hsh);
+}
