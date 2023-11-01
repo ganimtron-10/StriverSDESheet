@@ -1,0 +1,15 @@
+bool check(BinaryTreeNode<int>* r1, BinaryTreeNode<int>* r2){
+    if(r1 == NULL and r2 == NULL) return true;
+    if((r1 == NULL and r2 != NULL) or (r1 != NULL and r2 == NULL) or (r1->data != r2->data)){
+        return false;
+    }
+
+    return check(r1->left,r2->right) and check(r1->right,r2->left);
+}
+
+
+bool isSymmetric(BinaryTreeNode<int>* root)
+{
+    // Write your code here.    
+    return check(root, root);
+}
