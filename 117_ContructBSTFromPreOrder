@@ -1,0 +1,14 @@
+TreeNode *build(vector<int> &a, int &i, int maxVal) {
+    if (i == a.size() || a[i] > maxVal) return NULL;
+    TreeNode *root = new TreeNode(a[i++]);
+    root->left = build(a, i, root->data);
+    root->right = build(a, i, maxVal);
+    return root;
+}
+
+TreeNode *preOrderTree(vector<int> &preOrder)
+{
+    // Write your code here.
+    int i = 0;
+    return build(preOrder,i,INT_MAX);
+}
