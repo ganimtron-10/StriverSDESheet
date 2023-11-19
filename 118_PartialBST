@@ -1,0 +1,17 @@
+bool checkPartialBST(BinaryTreeNode<int> *root,int minVal, int maxVal){
+    if(root == NULL) return true;
+
+    if(root->data <= maxVal and root->data >= minVal){
+        return checkPartialBST(root->left,minVal,root->data) and checkPartialBST(root->right,root->data,maxVal);
+    }
+
+    return false;
+
+    
+}
+
+
+bool validateBST(BinaryTreeNode<int> *root) {
+    // Write your code here
+    return checkPartialBST(root, INT_MIN, INT_MAX);
+}
