@@ -1,0 +1,16 @@
+TreeNode *findNode(TreeNode *root, TreeNode *p, TreeNode *q){
+    if(p->data <= root->data and q->data >= root->data){
+        return root;
+    }
+    else if(root->data > p->data) findNode(root->left,p,q);
+    else findNode(root->right,p,q);
+}
+
+TreeNode *LCAinaBST(TreeNode *root, TreeNode *P, TreeNode *Q)
+{
+    // Write your code here.
+    if(P->data > Q->data){
+        swap(P,Q);
+    }
+    return findNode(root, P, Q);
+}
