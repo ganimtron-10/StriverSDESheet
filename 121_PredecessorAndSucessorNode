@@ -1,0 +1,31 @@
+int predecessor(TreeNode* root, int key){
+    int predecessorVal = -1;
+    while(root != NULL){
+        if(root->data >= key) root = root->left;
+        else{
+            predecessorVal = root->data;
+            root = root->right;
+        }
+    }
+    return predecessorVal;
+}
+
+int successor(TreeNode* root, int key){
+    int successorVal = -1;
+    while(root != NULL){
+        if(root->data <= key) root = root->right;
+        else{
+            successorVal = root->data;
+            root = root->left;
+        }
+    }
+    return successorVal;
+}
+
+
+
+pair<int, int> predecessorSuccessor(TreeNode *root, int key)
+{
+    // Write your code here.
+    return {predecessor(root, key),successor(root, key)};
+}
