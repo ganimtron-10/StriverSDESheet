@@ -1,0 +1,25 @@
+int cntInorder(TreeNode<int> *root, int k,int &cnt){
+    if(root == NULL) return -1;
+    int l = cntInorder(root->left,k,cnt);
+    if(l != -1) return l;
+    cnt++;
+    if(cnt == k) return root->data;
+    int r = cntInorder(root->right,k,cnt);
+    if(r != -1) return r;
+}
+
+int totalNodeCnt(TreeNode<int> *root){
+    if(root == NULL) return 0;
+    
+    int l = totalNodeCnt(root->left);
+    int r = totalNodeCnt(root->right);
+    return l + r + 1;
+}
+
+int KthLargestNumber(TreeNode<int>* root, int k) 
+{
+    // Write your code here.
+    int cnt = 0;
+    int n = totalNodeCnt(root);
+    return cntInorder(root, n-k+1, cnt);
+}
