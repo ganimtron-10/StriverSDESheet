@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+class BSTIterator{
+    public:
+    stack<BinaryTreeNode*> s;
+    bool reversed;
+    BSTIterator(BinaryTreeNode *node, bool reverse){
+        reversed = reverse;
+        pushAll(node);
+    }
+    bool hasnext(){
+        return !(s.empty());
+    }
+    int next(){
+        if(hasnext()){
+            BinaryTreeNode *cur = s.top();
+            s.pop();
+            if(!reversed){
+                pushAll(cur->right);
+            }else{
+                pushAll(cur->left);
+            }
+            return cur->data;
+        }
+        return -1;
+    }
+    void pushAll(BinaryTreeNode *node){
+        BinaryTreeNode *cur = node;
+        for(;cur!=NULL;){
+            if(!reversed){
+                s.push(cur);
+                cur = cur->left;
+            }else{
+                s.push(cur);
+                cur = cur->right;
+            }
+        }
+    }
+};
+
+bool pairSumBst(BinaryTreeNode *root, int k)
+{
+    // Write your code here
+    BSTIterator l(root,false);
+    BSTIterator r(root,true);
+
+    int i = l.next();
+    int j = r.next();
+
+    while (l.hasnext() && r.hasnext()) {
+        if (i + j == k) return true;
+        else if (i + j > k) {
+            j = r.next();
+        } else {
+            i = l.next();
+        }
+    }
+
+
+    return false;
+}
