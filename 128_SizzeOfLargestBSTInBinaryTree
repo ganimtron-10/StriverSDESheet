@@ -1,0 +1,20 @@
+
+pair<int, pair<int, int>> checkBST(TreeNode* root) {
+    if (root == NULL) return {0, {INT_MAX, INT_MIN}};
+
+    auto l = checkBST(root->left);
+    auto r = checkBST(root->right);
+
+    if (l.second.second < root->data && root->data < r.second.first) {
+        return {l.first + 1 + r.first,
+         {min(l.second.first,root->data),
+          max(r.second.second,root->data)}};
+    } else {
+        return {max(l.first,r.first), {INT_MIN, INT_MAX}};
+    }
+}
+
+int largestBST(TreeNode* root) {
+    // Write your code here.
+    return checkBST(root).first;
+}
