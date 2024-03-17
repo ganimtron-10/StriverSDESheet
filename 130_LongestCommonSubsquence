@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+
+int genLCS(vector<vector<int>> &dp, string s, int i, string t, int j) {
+    if (i < 0 || j < 0) {
+        return 0;
+    }
+
+    if (dp[i][j] != -1) return dp[i][j];
+
+    if (s[i] == t[j]) {
+        return dp[i][j] = 1 + genLCS(dp, s, i - 1, t, j - 1);
+    } else {
+        int option1 = genLCS(dp, s, i - 1, t, j);
+        int option2 = genLCS(dp, s, i, t, j - 1);
+        return dp[i][j] = max(option1, option2);
+    }
+}
+
+int lcs(string s, string t) {
+    // Write your code here
+    vector<vector<int>> dp(s.size(), vector<int>(t.size(), -1));
+    return genLCS(dp, s, s.size() - 1, t, t.size() - 1);
+}
