@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+
+bool check(vector<int>& arr, int n, int k, int i, int sum, vector<vector<int>>& dp) {
+    if (i == 0) {
+        return dp[i][sum] = ((k == sum) || (k == sum+arr[i]));
+    }
+
+    if (dp[i][sum] != -1) return dp[i][sum];
+
+    if (sum + arr[i] <= k) {
+        return dp[i][sum] = check(arr, n, k, i - 1, sum + arr[i], dp) || check(arr, n, k, i - 1, sum, dp);
+    }
+
+    return dp[i][sum] = check(arr, n, k, i - 1, sum, dp);
+}
+
+bool subsetSumToK(int n, int k, vector<int>& arr) {
+    // Write your code here.
+    const int N = 1e3;
+    vector<vector<int>> dp(n, vector<int>(k + 1, -1));
+    return check(arr, n - 1, k, n - 1, 0, dp);
+}
