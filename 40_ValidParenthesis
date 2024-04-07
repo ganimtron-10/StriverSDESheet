@@ -25,3 +25,29 @@ bool isValidParenthesis(string s)
     }
     return st.empty();
 }
+
+bool isValidParenthesis(string s)
+{
+    // Write your code here.
+    stack<int> container;
+    map<char, int> brackets = {
+        {'{', 1},
+        {'[', 2},
+        {'(', 3},
+        {'}', -1},
+        {']', -2},
+        {')', -3},
+    };
+    for(int i = 0; i < s.size(); i++){
+        if(brackets[s[i]] < 0){
+            if(container.empty() or container.top()+brackets[s[i]] != 0){
+                return false;
+            }
+            container.pop();
+        }
+        if(brackets[s[i]] > 0){
+            container.push(brackets[s[i]]);
+        }
+    }
+    return true;
+}
