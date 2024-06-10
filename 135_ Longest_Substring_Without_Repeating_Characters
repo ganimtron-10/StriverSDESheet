@@ -1,0 +1,23 @@
+#include <bits/stdc++.h> 
+int uniqueSubstrings(string input)
+{
+    //Write your code here
+    int l = 0;
+    int r = 0;
+    vector<int> map(256,-1);
+    int maxLength = 0;
+
+    while(r < input.size()){
+
+        if(map[input[r]] != -1){           
+            l = max(map[input[r]]+1, l);
+        }
+
+        map[input[r]] = r;
+
+        maxLength = max(maxLength, r-l+1);
+        r++;
+    }
+
+    return maxLength;
+}
