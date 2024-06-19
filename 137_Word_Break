@@ -1,0 +1,31 @@
+#include <bits/stdc++.h> 
+
+void recurs(string& s, set<string>& d, vector<string>& r, string& cs, int i){
+    if(i >= s.size()){
+        r.push_back(cs);
+        return;
+    }
+
+    for(int j = 1; i+j <= s.size(); j++){
+        string temp = s.substr(i,j);
+        for(string ds: d){
+            if(temp == ds){
+                cs += ds;
+                cs += ' ';
+                recurs(s, d, r, cs, i+j);
+                cs.resize(cs.size() - ds.size() - 1);
+            }
+        }
+    }
+
+}
+
+vector<string> wordBreak(string &s, vector<string> &dictionary)
+{
+    // Write your code here
+    vector<string> result;
+    string curString = "";
+    set<string> dic(dictionary.begin(), dictionary.end()) ;
+    recurs(s, dic, result, curString, 0);
+    return result;
+}
