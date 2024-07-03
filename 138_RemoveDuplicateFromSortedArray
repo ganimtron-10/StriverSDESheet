@@ -1,0 +1,12 @@
+int removeDuplicates(vector<int> &arr, int n) {
+	// Write your code here.
+	int cnt = 1;
+	int prev = arr[0];
+	for(int i = 1; i < arr.size(); i++){
+		if(prev != arr[i]){
+			prev = arr[i];
+			cnt++;
+		}
+	}
+	return cnt;
+}
