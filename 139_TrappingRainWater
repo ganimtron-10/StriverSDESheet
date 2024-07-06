@@ -1,0 +1,24 @@
+long long getTrappedWater(long long* a, int n) {
+    // Write your code here.
+    int l = 0;
+    int r = n-1;
+    int lm = 0;
+    int rm = 0;
+    long long res = 0;
+
+    while(l <= r){
+        if(a[l] <= a[r]){
+            if(a[l] > lm) lm = a[l];
+            else res += lm - a[l];
+
+            l++;
+        }else{
+            if(a[r] > rm) rm = a[r];
+            else res += rm - a[r];
+
+            r--;
+        }
+    }
+
+    return res;
+}
