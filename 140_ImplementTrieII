@@ -1,0 +1,83 @@
+#include <bits/stdc++.h> 
+class Node{
+    public:
+    Node *arr[257] = {};
+    bool end;
+    int cnt;
+
+    Node(){
+        end = false;
+        cnt = 0;
+    }
+};
+
+class Trie{
+
+    public:
+    Node *start;
+
+    Trie(){
+        // Write your code here.
+        start = new Node();
+    }
+
+    void insert(string &word){
+        // Write your code here.
+        Node *cur = start;
+        for(int i = 0; i<word.size(); i++){
+            if(cur->arr[word[i]] == NULL){
+                cur->arr[word[i]] = new Node();
+            }
+            cur = cur->arr[word[i]];
+        }
+        cur->end = true;
+        cur->cnt++;
+    }
+
+    int countWordsEqualTo(string &word){
+        // Write your code here.
+        Node *cur = start;
+        for(int i = 0;i < word.size(); i++){
+            if (cur->arr[word[i]] == NULL) return 0;
+            cur = cur->arr[word[i]];
+        }
+        
+        return cur->end ? cur->cnt : 0;
+    }
+
+    int countAllWords(Node* cur){
+        int cnt = cur->cnt;
+        for(int i = 0; i < 257; i++){
+            if(cur->arr[i] != NULL){
+                cnt += countAllWords(cur->arr[i]);
+            }
+        }
+
+        return cnt;
+    }
+
+    int countWordsStartingWith(string &word){
+        // Write your code here.
+        Node *cur = start;
+        for(int i = 0;i < word.size(); i++){
+            if (cur->arr[word[i]] == NULL) return 0;
+            cur = cur->arr[word[i]];
+        }
+        
+        return countAllWords(cur);
+    }
+
+    void erase(string &word){
+        // Write your code here.
+        Node *cur = start;
+        for(int i = 0;i < word.size(); i++){
+            if (cur->arr[word[i]] == NULL) return;
+            cur = cur->arr[word[i]];
+        }
+        
+        if(cur->cnt == 1){
+            cur->end = false;
+        }
+        cur->cnt--;
+    }
+};
