@@ -1,0 +1,83 @@
+#include <bits/stdc++.h> 
+
+class Node{
+    private:
+        Node* arr[26];
+        bool flag = false;
+
+    public:
+        bool containsKey(char c){
+            return arr[c - 'a'] != NULL;
+        }
+
+        Node* getKey(char c){
+            return arr[c - 'a'];
+        }
+
+        void put(char c, Node* n){
+            arr[c - 'a'] = n;
+        }
+
+        void setEnd(){
+            flag = true;
+        }
+
+        bool isEnd(){
+            return flag;
+        }
+};
+
+class Trie{
+    private:
+        Node* root = new Node();
+
+    public:
+        void insert(string s){
+            Node* cur = root;
+            for(int i = 0; i < s.size(); i++){
+                // cout << s[i] << endl;
+                if(!cur->containsKey(s[i])){
+                    cur->put(s[i], new Node());
+                }
+                cur = cur->getKey(s[i]);
+            }
+            cur->setEnd();
+        }
+
+        bool checkIfAllPrefixExists(string s){
+            Node* cur = root;
+            for(int i = 0; i < s.size(); i++){
+                cur = cur->getKey(s[i]);
+                if(!cur->isEnd()) return false;
+            }
+            return true;
+        }
+};
+
+string completeString(int n, vector<string> &a){
+    // Write your code here.
+    Trie trie;
+
+    for(string s: a){
+        trie.insert(s);
+    }
+
+    string longest = "";
+    for(string s: a){
+        if(trie.checkIfAllPrefixExists(s)){
+            if((s.size() > longest.size()) or (s.size() == longest.size() and s < longest)){
+                longest = s;
+            }
+        }
+    }
+
+    if(longest == "") return "None";
+    return longest;
+}
+
+
+
+
+
+
+
