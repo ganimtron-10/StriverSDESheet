@@ -1,0 +1,100 @@
+#include <bits/stdc++.h>
+
+class Node
+{
+private:
+    Node *arr[2];
+
+public:
+    Node *get(int k)
+    {
+        return arr[k];
+    }
+
+    bool containsKey(int k)
+    {
+        return arr[k];
+    }
+
+    void put(int k, Node *n)
+    {
+        arr[k] = n;
+    }
+};
+
+class Trie
+{
+private:
+    Node *root = new Node();
+
+public:
+    void insert(int n)
+    {
+        Node *cur = root;
+        for (int i = 31; i >= 0; i--)
+        {
+            int bit = (n >> i) & 1;
+            if (!cur->containsKey(bit))
+            {
+                cur->put(bit, new Node());
+            }
+            cur = cur->get(bit);
+        }
+    }
+
+    int findMax(int n)
+    {
+        Node *cur = root;
+        long long ans = 0;
+        for (int i = 31; i >= 0; i--)
+        {
+            int bit = (n >> i) & 1;
+            if (cur->containsKey(1 - bit))
+            {
+                ans = ans | (1 << i);
+                cur = cur->get(1 - bit);
+            }
+            else
+            {
+                cur = cur->get(bit);
+            }
+        }
+        return ans;
+    }
+};
+
+vector<int> maxXorQueries(vector<int> &arr, vector<vector<int>> &queries)
+{
+    //	Write your coode here.
+    Trie trie;
+    sort(arr.begin(), arr.end());
+    vector<pair<int, pair<int, int>>> qStore;
+    int i = 0, q = queries.size();
+    for (vector<int> it : queries)
+    {
+        qStore.push_back({it[1], {it[0], i++}});
+    }
+    sort(qStore.begin(), qStore.end());
+
+    vector<int> ans(q, 0);
+    int x = 0;
+    for (int i = 0; i < q; i++)
+    {
+        int ai = qStore[i].first;
+        int xi = qStore[i].second.first;
+        int ind = qStore[i].second.second;
+
+        while (x < arr.size() and arr[x] <= ai)
+        {
+            trie.insert(arr[x]);
+            x++;
+        }
+
+        if (x == 0)
+            ans[ind] = -1;
+        else
+            ans[ind] = trie.findMax(xi);
+    }
+
+    return ans;
+}
