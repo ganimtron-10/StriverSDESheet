@@ -1,0 +1,71 @@
+class Stack {
+	// Define the data members.
+    queue<int> q1, q2;
+    int size;
+
+   public:
+    Stack() {
+        // Implement the Constructor.
+        size = 0;        
+    }
+
+    /*----------------- Public Functions of Stack -----------------*/
+
+    int getSize() {
+        // Implement the getSize() function.
+        return size;
+    }
+
+    bool isEmpty() {
+        // Implement the isEmpty() function.
+        return size == 0;
+    }
+
+    void push(int element) {
+        // Implement the push() function.
+        if(q1.empty()){
+            q2.push(element);
+        }else{
+            q1.push(element);
+        }
+        size++;
+    }
+
+    int pop() {
+        // Implement the pop() function.
+        if(!isEmpty()){
+            size--;
+            int element = -1;
+            if(q1.empty()){
+                while(true and !q2.empty()){
+                    element = q2.front();
+                    q2.pop();
+                    if(!q2.empty()){
+                        q1.push(element);
+                    }
+                }
+                return element;
+            }else{
+                while(true and !q1.empty()){
+                    element = q1.front();
+                    q1.pop();
+                    if(!q1.empty()){
+                        q2.push(element);
+                    }
+                }
+                return element;
+            }
+        }
+        return -1;
+    }
+
+    int top() {
+        // Implement the top() function.
+        if(!isEmpty()){
+            int element = pop();
+            push(element);
+            return element;
+        }
+        return -1;
+    }
+};
