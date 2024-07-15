@@ -1,0 +1,18 @@
+#include <bits/stdc++.h> 
+vector<int> findSpans(vector<int> &price) {
+    // Write your code here.
+    stack<pair<int,int>> s;
+    vector<int> res;
+    s.push({price[0], 1});
+    res.push_back(1);
+    for(int i = 1; i < price.size(); i++){
+        int span = 1;
+        while(!s.empty() and s.top().first <= price[i]){
+            span += s.top().second;
+            s.pop();
+        }
+        s.push({price[i], span});
+        res.push_back(span);
+    }
+    return res;
+}
